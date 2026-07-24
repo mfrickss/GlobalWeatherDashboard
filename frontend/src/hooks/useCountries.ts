@@ -1,18 +1,18 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { fetchBoardItems } from '@/services/mondayService';
-import type { CountryItem } from '@/types/monday';
+import { fetchCountries } from '@/services/countryService';
+import type { CountryItem } from '@/types/country';
 
-export function useMondayData() {
+export function useCountries() {
   const [items, setItems] = useState<CountryItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetchBoardItems()
+    fetchCountries()
       .then(setItems)
-      .catch(() => setError('Failed to load board data.'))
+      .catch((err) => setError(err instanceof Error ? err.message : 'Failed to load countries.'))
       .finally(() => setLoading(false));
   }, []);
 

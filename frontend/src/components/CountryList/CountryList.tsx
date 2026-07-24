@@ -1,4 +1,4 @@
-import type { CountryItem as CountryItemType } from '@/types/monday';
+import type { CountryItem as CountryItemType } from '@/types/country';
 import { CountryItem } from '../CountryItem/CountryItem';
 import styles from './CountryList.module.css';
 

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { useMondayData } from '@/hooks/useMondayData';
+import { useCountries } from '@/hooks/useCountries';
 import { useWeather } from '@/hooks/useWeather';
 import { SearchBar } from '@/components/SearchBar/SearchBar';
 import { CountryList } from '@/components/CountryList/CountryList';
@@ -9,7 +9,7 @@ import { WeatherModal } from '@/components/WeatherModal/WeatherModal';
 import styles from './page.module.css';
 
 export default function Home() {
-  const { items, loading: loadingBoard, error: boardError } = useMondayData();
+  const { items, loading: loadingCountries, error: countriesError } = useCountries();
   const {
     weather,
     loading: loadingWeather,
@@ -35,12 +35,12 @@ export default function Home() {
     clearWeather();
   }
 
-  if (boardError) {
+  if (countriesError) {
     return (
       <main className={styles.main}>
         <div className={styles.errorContainer}>
-          <h2>Failed to Sync Data</h2>
-          <p>{boardError}</p>
+          <h2>Failed to Load Countries</h2>
+          <p>{countriesError}</p>
         </div>
       </main>
     );
@@ -54,14 +54,14 @@ export default function Home() {
         <header className={styles.header}>
           <h1 className={styles.title}>Global Weather</h1>
           <p className={styles.subtitle}>
-            Select a country from your monday.com board
+            Select a country to view real-time weather
           </p>
         </header>
 
-        {loadingBoard ? (
+        {loadingCountries ? (
           <div className={styles.loadingState}>
             <div className={styles.pulse}></div>
-            <p>Syncing with monday.com...</p>
+            <p>Loading countries...</p>
           </div>
         ) : (
           <SearchBar 
@@ -72,7 +72,7 @@ export default function Home() {
         )}
         
         {/* Restoring the normal display of countries with the new small cards */}
-        {!loadingBoard && items.length > 0 && (
+        {!loadingCountries && items.length > 0 && (
           <CountryList items={filteredItems} onSelect={handleSelect} />
         )}
 

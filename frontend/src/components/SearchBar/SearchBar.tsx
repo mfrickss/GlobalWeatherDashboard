@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import styles from './SearchBar.module.css';
-import type { CountryItem } from '@/types/monday';
+import type { CountryItem } from '@/types/country';
 import { getCountryFlagUrl } from '@/utils/flags';
 
 interface SearchBarProps {

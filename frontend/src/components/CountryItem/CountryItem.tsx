@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import styles from './CountryItem.module.css';
-import type { CountryItem as CountryItemType } from '@/types/monday';
+import type { CountryItem as CountryItemType } from '@/types/country';
 import { getCountryFlagUrl } from '@/utils/flags';
 import { fetchWeather } from '@/services/weatherApi';
 

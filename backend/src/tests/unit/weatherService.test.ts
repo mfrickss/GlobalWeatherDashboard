@@ -28,8 +28,8 @@ describe('weatherService', () => {
             text: 'Sunny',
             icon: '//cdn.weatherapi.com/weather/64x64/day/113.png',
           },
-          feels_like_c: 30,
-          feels_like_f: 86.0,
+          feelslike_c: 30,
+          feelslike_f: 86.0,
         },
       },
     };

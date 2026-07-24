@@ -1,25 +1,36 @@
+import countries from 'i18n-iso-countries';
+import enLocale from 'i18n-iso-countries/langs/en.json';
 import type { CountryItem } from '@/types/country';
+import { getApiBaseUrl } from '@/utils/api';
 
-interface RestCountry {
-  name: {
-    common: string;
-  };
-  cca2: string;
+countries.registerLocale(enLocale);
+
+export function getAllIsoCountries(): CountryItem[] {
+  const namesMap = countries.getNames('en');
+  return Object.entries(namesMap)
+    .map(([code, name]) => ({
+      id: code,
+      name: name as string,
+    }))
+    .sort((a, b) => a.name.localeCompare(b.name));
 }
 
 export async function fetchCountries(): Promise<CountryItem[]> {
-  const response = await fetch('https://restcountries.com/v3.1/all?fields=name,cca2');
+  const baseUrl = getApiBaseUrl();
 
-  if (!response.ok) {
-    throw new Error(`Failed to fetch countries: ${response.statusText}`);
+  // 1. Try backend endpoint first
+  try {
+    const res = await fetch(`${baseUrl}/countries`);
+    if (res.ok) {
+      const json = await res.json();
+      if (json.success && Array.isArray(json.data) && json.data.length > 0) {
+        return json.data;
+      }
+    }
+  } catch {
+    // Fall through if backend fetch fails
   }
 
-  const data: RestCountry[] = await response.json();
-
-  return data
-    .map((country) => ({
-      id: country.cca2,
-      name: country.name.common,
-    }))
-    .sort((a, b) => a.name.localeCompare(b.name));
+  // 2. Return full 250 ISO countries list
+  return getAllIsoCountries();
 }

@@ -13,9 +13,15 @@ app.use(express.json());
 app.use(cors({ origin: corsOrigin, methods: ['GET', 'OPTIONS'] }));
 
 
+// Direct routes
 app.use('/weather', weatherRouter);
 app.use('/countries', countryRouter);
+
+// Vercel proxy / serverless routes
+app.use('/api/backend/weather', weatherRouter);
+app.use('/api/backend/countries', countryRouter);
 
 app.use(errorHandler);
 
 export default app;
+

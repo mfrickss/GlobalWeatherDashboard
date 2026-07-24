@@ -3,6 +3,10 @@ export function getApiBaseUrl(): string {
   if (envUrl && envUrl !== 'undefined' && envUrl.trim() !== '') {
     return envUrl.replace(/\/$/, '');
   }
+  if (typeof window !== 'undefined' && window.location.hostname !== 'localhost') {
+    return '/api/backend';
+  }
   return 'http://localhost:3001';
 }
+
 

@@ -3,7 +3,7 @@
 	width: 100%;
 	max-width: 600px;
 	margin: 0 auto 2rem auto;
-    z-index: 20;
+	z-index: 20;
 }
 
 .searchInput {
@@ -27,8 +27,8 @@
 }
 
 .dropdownActive {
-    border-bottom-left-radius: 0 !important;
-    border-bottom-right-radius: 0 !important;
+	border-bottom-left-radius: 0 !important;
+	border-bottom-right-radius: 0 !important;
 }
 
 .searchInput::placeholder {
@@ -46,89 +46,98 @@
 }
 
 .dropdown {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: rgba(15, 23, 42, 0.95);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-top: none;
-    border-bottom-left-radius: 16px;
-    border-bottom-right-radius: 16px;
-    max-height: 350px;
-    overflow-y: auto;
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
-    animation: slideDown 0.2s ease forwards;
+	position: absolute;
+	top: 100%;
+	left: 0;
+	right: 0;
+	background: rgba(15, 23, 42, 0.95);
+	backdrop-filter: blur(12px);
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	border-top: none;
+	border-bottom-left-radius: 16px;
+	border-bottom-right-radius: 16px;
+	max-height: 350px;
+	overflow-y: auto;
+	box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+	animation: slideDown 0.2s ease forwards;
 }
 
 .dropdownItem {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 1.5rem;
-    cursor: pointer;
-    transition: background 0.2s ease;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1rem 1.5rem;
+	cursor: pointer;
+	transition: background 0.2s ease;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .dropdownItem:last-child {
-    border-bottom: none;
+	border-bottom: none;
 }
 
-.dropdownItem:hover, .dropdownItem:focus-visible {
-    background: rgba(59, 130, 246, 0.15);
-    outline: none;
+.dropdownItem:hover,
+.dropdownItem:focus-visible {
+	background: rgba(59, 130, 246, 0.15);
+	outline: none;
 }
 
 .itemContent {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+	display: flex;
+	align-items: center;
+	gap: 1rem;
 }
 
 .flagIcon {
-    width: 24px;
-    border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+	width: 24px;
+	border-radius: 4px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .flagFallback {
-    font-size: 1.25rem;
+	font-size: 1.25rem;
 }
 
 .countryName {
-    font-size: 1rem;
-    color: #f8fafc;
-    font-weight: 500;
+	font-size: 1rem;
+	color: #f8fafc;
+	font-weight: 500;
 }
 
 .arrow {
-    width: 16px;
-    height: 16px;
-    color: #6b7280;
-    transition: transform 0.2s ease, color 0.2s ease;
+	width: 16px;
+	height: 16px;
+	color: #6b7280;
+	transition:
+		transform 0.2s ease,
+		color 0.2s ease;
 }
 
 .dropdownItem:hover .arrow {
-    transform: translateX(4px);
-    color: #3b82f6;
+	transform: translateX(4px);
+	color: #3b82f6;
 }
 
 .emptyState {
-    padding: 1.5rem;
-    text-align: center;
-    color: #94a3b8;
-    font-style: italic;
+	padding: 1.5rem;
+	text-align: center;
+	color: #94a3b8;
+	font-style: italic;
 }
 
 @keyframes slideDown {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
+	from {
+		opacity: 0;
+		transform: translateY(-10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
 }
 
 @media (max-width: 640px) {
-    .dropdown {
-        max-height: 250px;
-    }
+	.dropdown {
+		max-height: 250px;
+	}
 }

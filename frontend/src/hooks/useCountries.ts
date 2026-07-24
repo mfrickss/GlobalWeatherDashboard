@@ -12,7 +12,11 @@ export function useCountries() {
   useEffect(() => {
     fetchCountries()
       .then(setItems)
-      .catch((err) => setError(err instanceof Error ? err.message : 'Failed to load countries.'))
+      .catch((err) =>
+        setError(
+          err instanceof Error ? err.message : 'Failed to load countries.',
+        ),
+      )
       .finally(() => setLoading(false));
   }, []);
 

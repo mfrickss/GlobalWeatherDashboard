@@ -8,7 +8,16 @@ export interface WeatherData {
   condition_icon: string;
   feels_like_c: number;
   feels_like_f: number;
+  humidity: number;
+  wind_kph: number;
+  precip_mm: number;
+  cloud: number;
+  uv: number;
+  pressure_mb: number;
+  vis_km: number;
+  forecast?: { time: string; temp_c: number; temp_f: number; condition: string }[];
 }
+
 
 export interface ApiSuccess<T> {
   success: true;

@@ -15,7 +15,7 @@ export function SearchBar({ items, onSelect, onSearchChange }: SearchBarProps) {
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const filtered = items.filter((item) =>
-    item.name.toLowerCase().includes(value.toLowerCase())
+    item.name.toLowerCase().includes(value.toLowerCase()),
   );
 
   const showDropdown = isFocused && value.trim().length > 0;
@@ -28,7 +28,10 @@ export function SearchBar({ items, onSelect, onSearchChange }: SearchBarProps) {
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setIsFocused(false);
       }
     }
@@ -81,20 +84,37 @@ export function SearchBar({ items, onSelect, onSearchChange }: SearchBarProps) {
                 >
                   <div className={styles.itemContent}>
                     {flagUrl ? (
-                      <img src={flagUrl} alt={`${item.name} flag`} className={styles.flagIcon} />
+                      <img
+                        src={flagUrl}
+                        alt={`${item.name} flag`}
+                        className={styles.flagIcon}
+                      />
                     ) : (
                       <span className={styles.flagFallback}>🏳️</span>
                     )}
                     <span className={styles.countryName}>{item.name}</span>
                   </div>
-                  <svg className={styles.arrow} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                  <svg
+                    className={styles.arrow}
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={2}
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                    />
                   </svg>
                 </div>
               );
             })
           ) : (
-            <div className={styles.emptyState}>No countries found matching "{value}"</div>
+            <div className={styles.emptyState}>
+              No countries found matching "{value}"
+            </div>
           )}
         </div>
       )}

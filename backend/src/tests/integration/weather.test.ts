@@ -17,6 +17,13 @@ describe('GET /weather/:country', () => {
       condition_icon: 'https://example.com/icon.png',
       feels_like_c: 30,
       feels_like_f: 80.4,
+      humidity: 65,
+      wind_kph: 12,
+      precip_mm: 0,
+      cloud: 20,
+      uv: 6,
+      pressure_mb: 1014,
+      vis_km: 10,
     });
 
     const res = await request(app).get('/weather/Brazil');

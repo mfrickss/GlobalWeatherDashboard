@@ -1,15 +1,20 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useEffect } from 'react';
+import { AtmosphericBackground } from '@/components/AtmosphericBackground';
+import { DashboardHeader } from '@/components/DashboardHeader';
+import { WeatherCardGrid } from '@/components/WeatherCardGrid';
+import { WeatherDetailModal } from '@/components/WeatherDetailModal';
 import { useCountries } from '@/hooks/useCountries';
+import { useDashboard } from '@/hooks/useDashboard';
 import { useWeather } from '@/hooks/useWeather';
-import { SearchBar } from '@/components/SearchBar/SearchBar';
-import { CountryList } from '@/components/CountryList/CountryList';
-import { WeatherModal } from '@/components/WeatherModal/WeatherModal';
-import styles from './page.module.css';
 
 export default function Home() {
-  const { items, loading: loadingCountries, error: countriesError } = useCountries();
+  const {
+    items,
+    loading: loadingCountries,
+    error: countriesError,
+  } = useCountries();
   const {
     weather,
     loading: loadingWeather,
@@ -17,75 +22,89 @@ export default function Home() {
     loadWeather,
     clearWeather,
   } = useWeather();
-  const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
-  const [searchQuery, setSearchQuery] = useState('');
+  const {
+    unit,
+    search,
+    displayedItems,
+    selectedCountry,
+    refreshKey,
+    handleSelect,
+    handleClose,
+    handleUnitChange,
+    handleSearchChange,
+    handleRefresh,
+  } = useDashboard(items);
 
-  const filteredItems = useMemo(
-    () => items.filter((item) => item.name.toLowerCase().includes(searchQuery.toLowerCase())),
-    [items, searchQuery]
-  );
-
-  async function handleSelect(country: string) {
-    setSelectedCountry(country);
-    await loadWeather(country);
+  async function onSelectCountry(countryName: string) {
+    handleSelect(countryName);
+    await loadWeather(countryName);
   }
 
-  function handleCloseModal() {
-    setSelectedCountry(null);
+  function onCloseModal() {
+    handleClose();
     clearWeather();
   }
 
+  // Trigger re-fetch when refresh button is clicked
+  useEffect(() => {
+    if (refreshKey > 0 && selectedCountry) {
+      loadWeather(selectedCountry);
+    }
+  }, [refreshKey, selectedCountry, loadWeather]);
+
   if (countriesError) {
     return (
-      <main className={styles.main}>
-        <div className={styles.errorContainer}>
-          <h2>Failed to Load Countries</h2>
-          <p>{countriesError}</p>
+      <main className="relative min-h-screen bg-[#0f171a] font-sans text-white flex items-center justify-center p-6">
+        <AtmosphericBackground />
+        <div className="relative z-10 max-w-md text-center rounded-2xl border border-rose-500/20 bg-[#131d20]/80 p-8 backdrop-blur-md">
+          <h2 className="text-xl font-semibold text-rose-400 mb-2">
+            Failed to Load Countries
+          </h2>
+          <p className="text-sm text-white/60">{countriesError}</p>
         </div>
       </main>
     );
   }
 
   return (
-    <main className={styles.main}>
-      <div className={styles.heroGlow}></div>
+    <div className="relative min-h-screen overflow-x-hidden bg-[#0f171a] font-sans text-white">
+      <AtmosphericBackground />
 
-      <div className={styles.container}>
-        <header className={styles.header}>
-          <h1 className={styles.title}>Global Weather</h1>
-          <p className={styles.subtitle}>
-            Select a country to view real-time weather
-          </p>
-        </header>
+      <div className="relative z-10 mx-auto max-w-[1200px] px-5 py-6 md:px-8 md:py-10">
+        <DashboardHeader
+          unit={unit}
+          search={search}
+          refreshing={loadingWeather}
+          onUnitChange={handleUnitChange}
+          onSearchChange={handleSearchChange}
+          onRefresh={handleRefresh}
+        />
 
         {loadingCountries ? (
-          <div className={styles.loadingState}>
-            <div className={styles.pulse}></div>
-            <p>Loading countries...</p>
+          <div className="flex flex-col items-center justify-center py-20 text-white/40 gap-4">
+            <div className="h-8 w-8 animate-spin rounded-full border-2 border-[#7a9a92] border-t-transparent" />
+            <p className="text-sm font-medium">Loading countries...</p>
           </div>
         ) : (
-          <SearchBar 
-            items={items} 
-            onSelect={handleSelect} 
-            onSearchChange={setSearchQuery} 
-          />
-        )}
-        
-        {/* Restoring the normal display of countries with the new small cards */}
-        {!loadingCountries && items.length > 0 && (
-          <CountryList items={filteredItems} onSelect={handleSelect} />
-        )}
-
-        {selectedCountry && (
-          <WeatherModal
-            country={selectedCountry}
-            weather={weather}
-            loading={loadingWeather}
-            error={weatherError}
-            onClose={handleCloseModal}
+          <WeatherCardGrid
+            items={displayedItems}
+            unit={unit}
+            search={search}
+            onSelect={onSelectCountry}
           />
         )}
       </div>
-    </main>
+
+      {selectedCountry && (
+        <WeatherDetailModal
+          country={selectedCountry}
+          weather={weather}
+          loading={loadingWeather}
+          error={weatherError}
+          unit={unit}
+          onClose={onCloseModal}
+        />
+      )}
+    </div>
   );
 }

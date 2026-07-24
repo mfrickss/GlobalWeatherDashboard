@@ -1,11 +1,25 @@
-import * as countries from 'i18n-iso-countries';
-import enLocale from 'i18n-iso-countries/langs/en.json';
+const nameToCodeCache = new Map<string, string>();
 
-countries.registerLocale(enLocale);
+export function registerCountryCodes(
+  countries: { id: string; name: string }[],
+): void {
+  for (const c of countries) {
+    nameToCodeCache.set(c.name.toLowerCase(), c.id.toLowerCase());
+  }
+}
 
-export function getCountryFlagUrl(countryName: string): string | null {
-  const code = countries.getAlpha2Code(countryName, 'en');
-  if (!code) return null;
-  
-  return `https://flagcdn.com/w40/${code.toLowerCase()}.png`;
+export function getCountryFlagUrl(countryNameOrCode: string): string | null {
+  if (!countryNameOrCode) return null;
+
+  const trimmed = countryNameOrCode.trim();
+  if (trimmed.length === 2) {
+    return `https://flagcdn.com/w40/${trimmed.toLowerCase()}.png`;
+  }
+
+  const cachedCode = nameToCodeCache.get(trimmed.toLowerCase());
+  if (cachedCode) {
+    return `https://flagcdn.com/w40/${cachedCode}.png`;
+  }
+
+  return null;
 }

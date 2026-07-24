@@ -1,8 +1,9 @@
 import countries from 'i18n-iso-countries';
-import enLocale from 'i18n-iso-countries/langs/en.json';
 import { cache } from '../config/cache';
 
-countries.registerLocale(enLocale);
+// Register english locale dynamically
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+countries.registerLocale(require('i18n-iso-countries/langs/en.json'));
 
 export interface CountryItem {
   id: string;
@@ -19,7 +20,7 @@ export async function getCountries(): Promise<CountryItem[]> {
   const countryList: CountryItem[] = Object.entries(namesMap)
     .map(([code, name]) => ({
       id: code,
-      name: name as string,
+      name: Array.isArray(name) ? name[0] : name,
     }))
     .sort((a, b) => a.name.localeCompare(b.name));
 

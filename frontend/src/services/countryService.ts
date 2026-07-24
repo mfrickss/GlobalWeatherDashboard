@@ -1,16 +1,16 @@
 import countries from 'i18n-iso-countries';
-import enLocale from 'i18n-iso-countries/langs/en.json';
 import type { CountryItem } from '@/types/country';
 import { getApiBaseUrl } from '@/utils/api';
 
-countries.registerLocale(enLocale);
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+countries.registerLocale(require('i18n-iso-countries/langs/en.json'));
 
 export function getAllIsoCountries(): CountryItem[] {
   const namesMap = countries.getNames('en');
   return Object.entries(namesMap)
     .map(([code, name]) => ({
       id: code,
-      name: name as string,
+      name: Array.isArray(name) ? name[0] : name,
     }))
     .sort((a, b) => a.name.localeCompare(b.name));
 }

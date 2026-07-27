@@ -9,18 +9,21 @@ export function useWeather() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const loadWeather = useCallback(async (country: string, forceRefresh = false) => {
-    setLoading(true);
-    setError(null);
-    try {
-      const data = await fetchWeather(country, forceRefresh);
-      setWeather(data);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Unknown error');
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+  const loadWeather = useCallback(
+    async (country: string, forceRefresh = false) => {
+      setLoading(true);
+      setError(null);
+      try {
+        const data = await fetchWeather(country, forceRefresh);
+        setWeather(data);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Unknown error');
+      } finally {
+        setLoading(false);
+      }
+    },
+    [],
+  );
 
   const clearWeather = useCallback(() => {
     setWeather(null);
@@ -29,4 +32,3 @@ export function useWeather() {
 
   return { weather, loading, error, loadWeather, clearWeather };
 }
-

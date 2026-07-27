@@ -15,9 +15,13 @@ export interface WeatherData {
   uv: number;
   pressure_mb: number;
   vis_km: number;
-  forecast?: { time: string; temp_c: number; temp_f: number; condition: string }[];
+  forecast?: {
+    time: string;
+    temp_c: number;
+    temp_f: number;
+    condition: string;
+  }[];
 }
-
 
 export interface ApiSuccess<T> {
   success: true;

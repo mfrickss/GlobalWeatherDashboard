@@ -1,6 +1,6 @@
 # Global Weather Dashboard
 
-Ecossistema de visualização meteorológica em tempo real, projetado para operar como Widget de Quadro (Board View) do monday.com e como Dashboard Web Standalone.
+Ecossistema de visualização meteorológica em tempo real e Dashboard Web Standalone.
 
 ---
 
@@ -10,7 +10,7 @@ O Global Weather Dashboard permite aos usuários monitorar dados climáticos det
 
 O sistema é organizado em uma estrutura monorepo desacoplada:
 
-- **Frontend**: Aplicação web desenvolvida em Next.js 16 (React 19) e Tailwind CSS v4. Possui sistema de fundo dinâmico atmosférico, modais detalhados e alternância entre o modo Widget monday.com e o modo Standalone.
+- **Frontend**: Aplicação web desenvolvida em Next.js 16 (React 19) e Tailwind CSS v4. Possui sistema de fundo dinâmico atmosférico, busca instantânea e modais detalhados.
 - **Backend**: API RESTful desenvolvida em Node.js com Express v5 e TypeScript. Atua como proxy inteligente consumindo provedores de dados meteorológicos, aplicando políticas de suporte a CORS, tratamento centralizado de erros e cache in-memory.
 
 ---
@@ -21,7 +21,6 @@ O sistema é organizado em uma estrutura monorepo desacoplada:
 - **Framework**: Next.js 16 (React 19 - App Router)
 - **Estilização**: Tailwind CSS v4 com utilitários customizados e Glassmorphism
 - **Ícones**: Lucide React
-- **Integração monday.com**: monday-sdk-js com fallback automático para modo Standalone
 - **Qualidade de Código**: Biome (Linting e Formatação), Vitest (Testes unitários)
 
 ### Backend

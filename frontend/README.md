@@ -1,15 +1,12 @@
 # Global Weather Dashboard (Frontend)
 
-Interface web responsiva e atmosférica desenvolvida em Next.js 16, React 19 e Tailwind CSS v4. O frontend opera como Widget de Quadro (Board View) do monday.com e como Aplicação Web Standalone.
+Interface web responsiva e atmosférica desenvolvida em Next.js 16, React 19 e Tailwind CSS v4.
 
 ---
 
 ## Recursos e Funcionalidades
 
 - **Fundo Atmosférico Dinâmico (AtmosphericBackground)**: Fundo visual renderizado via CSS/Canvas que reage ao clima atual da localização selecionada (sol, nuvens, chuva, neve, tempestades).
-- **Modo Dual de Operação**:
-  - **Widget monday.com**: Integração nativa via monday-sdk-js para leitura dos itens e países das colunas do quadro monday.com.
-  - **Modo Standalone**: Fallback automático para uso autônomo com lista de países padrão.
 - **Painel de Controle (DashboardHeader)**: Busca instantânea com filtro em tempo real, alternador de unidade de temperatura (°C / °F), botão de atualização rápida e métricas.
 - **Grid de Cards de Clima (WeatherCardGrid & WeatherCard)**: Exibição visual com estilo Glassmorphism, animações e indicadores climáticos.
 - **Modal de Detalhes Completo (WeatherDetailModal)**:
@@ -26,7 +23,6 @@ Interface web responsiva e atmosférica desenvolvida em Next.js 16, React 19 e T
 - **Framework**: Next.js 16 (React 19 - App Router)
 - **Estilização**: Tailwind CSS v4 (@tailwindcss/postcss) com variáveis CSS e Glassmorphism
 - **Ícones**: Lucide React (lucide-react)
-- **SDK monday.com**: monday-sdk-js
 - **Qualidade de Código**: Biome (Linting e Formatação), Vitest (Testes unitários)
 
 ---
@@ -70,11 +66,11 @@ src/
 │   ├── WeatherCardGrid/              # Container em grid responsivo para os cards
 │   └── WeatherDetailModal/           # Modal expansivo com métricas estendidas
 ├── hooks/
-│   ├── useCountries.ts               # Hook para busca de países (monday.com SDK ou fallback)
+│   ├── useCountries.ts               # Hook para busca de países via Backend API
 │   ├── useDashboard.ts               # Hook principal de estado da UI (filtros, busca, unidades)
 │   └── useWeather.ts                 # Hook para consumo dos dados do backend de clima
 ├── services/
-│   ├── countryService.ts             # Serviço de integração com monday.com / dados de país
+│   ├── countryService.ts             # Serviço de busca de dados de países
 │   └── weatherApi.ts                 # Cliente HTTP para consumo da Backend Weather API
 ├── types/
 │   ├── ui.ts                         # Tipos de estado da interface e preferências do usuário
